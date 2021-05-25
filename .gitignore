@@ -1,3 +1,7 @@
+# My added ignores
+.DS_Store
+test_file.xlsx
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
