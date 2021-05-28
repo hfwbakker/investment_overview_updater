@@ -8,15 +8,17 @@ PROJECT:
 
 
 NEXT UP:
-- Continue filtering info from input excel sheet (like too many columns, stick with date, amount, reference, and perhaps other account number)
-- Need to merge two columns (credit and debit), perhaps can do like this: for i in column_1: column_3.append(column_1[i] + column_2[i])?
-- Combine output file with input from other files (info from multiple bank accounts).
 - Some of the strings inside  columns (especially in 'Narrative') are super long, perhaps need to edit those with regex?
+- Combine output file with input from other files (info from multiple bank accounts). Read multiple data sets by calling df1 = pd.read.. df2 = pd.read... and so on, then combine them if possible ? -> use argv and perhaps a for loop to input several files -> for I in len(argv); if argv[i] == .xlsx call xlsx reader, etc
 - Is it possible to sort by date (column 'Post date')?
-- Is it possible to format the excel sheet as you output data to it, like with openpyxl?
 
 
 LOG:
+--- Friday, May 28th, 2021 ---
+- Succesfully summed the debit and credit columns. Initially had an issue with them returning NaN (because by default either the credit or debit column is NaN), fixed it with .fillna(0) method, which automatically converts NaN to 0. No for loop was needed.
+- Realized that the first column with indices that I couldn't select or rename seems to be automatically added by Pandas when reading the data. Perhaps its a result of reading from excel as excel automatically numbers rows? -> nope, checked with Excel source file and numbers don't match Excel row numbers.
+- Succesfully changed column order to match investment overview sheet.
+
 --- Wednesday, May 26th, 2021 ---
 Day 2 of "investment overview updater".
 - Filtered columns, now deleting everything except number, narrative, credit amount, debit amount, balance, and post date.
