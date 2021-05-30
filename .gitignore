@@ -2,6 +2,8 @@
 .DS_Store
 test_file.xlsx
 output.xlsx
+/data
+/output
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

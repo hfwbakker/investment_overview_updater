@@ -1,17 +1,19 @@
 import pandas as pd
+import os.path
 
 print("Welcome to the Investment Overview Updater Script")
 
 ### READ DATA ###
-df = pd.read_excel('data/test_file.xlsx')
+df1 = pd.read_excel('data/test_file2.xlsx')
+df2 = pd.read_excel('data/investment_acc.xlsx')
+df3 = pd.read_excel('/Users/henribakker/OneDrive/WORK/3. Frying Dutchman/2. Legal & Finance/DMF Finance/gemaakte kosten.xlsx')
+
 
 ### FILTER & MODIFY DATA ###
-df['cash_flow'] = df['Credit amount'].fillna(0) + df['Debit amount'].fillna(0)
-print(df['cash_flow'])
+df1['001 Cash flow'] = df1['Credit amount'].fillna(0) + df1['Debit amount'].fillna(0)
+df2['011 Cash flow'] = df2['Credit amount'].fillna(0) + df2['Debit amount'].fillna(0)
 
-print(df.head())
-
-df.drop(['Account name', 'Account number', 'Bank name', 'Currency', 'Location', 'BIC', 'IBAN',
+df1.drop(['Account name', 'Bank name', 'Currency', 'Location', 'BIC', 'IBAN',
        'Account status', 'Account type', 'Closing ledger balance',
        'Closing ledger brought forward from', 'Closing available balance',
        'Closing available brought forward from', 'Current ledger balance',
@@ -19,14 +21,28 @@ df.drop(['Account name', 'Account number', 'Bank name', 'Currency', 'Location', 
        'Current available as at', 'Bank reference',
        'Customer reference', 'TRN type', 'Credit amount', 'Debit amount'], inplace=True, axis=1)
 
-df = df[::-1] # reverses row order
+df2.drop(['Account name', 'Bank name', 'Currency', 'Location', 'BIC', 'IBAN',
+       'Account status', 'Account type', 'Closing ledger balance',
+       'Closing ledger brought forward from', 'Closing available balance',
+       'Closing available brought forward from', 'Current ledger balance',
+       'Current ledger as at', 'Current available balance',
+       'Current available as at', 'Bank reference',
+       'Customer reference', 'TRN type', 'Credit amount', 'Debit amount'], inplace=True, axis=1)
 
-df = df[['Post date', 'Narrative', 'cash_flow']]
+df3.drop(['How much', 'in'], inplace=True, axis=1)
 
-# change column order to date > narrative > amount
+
+### MERGING DATAFRAMES & SORTING ###
+print("attempting to merge df1 and df2")
+final_df = pd.concat([df1, df2, df3])
+final_df = final_df[['Post date', 'Narrative', 'Balance Henri', '001 Cash flow', '011 Cash flow', 'Account number']]
+final_df = final_df.sort_values('Post date')
+
 
 ### OUTPUT ###
-print(df.columns)
-print(df)
-
-df.to_excel('output.xlsx')
+# output files, while ensuring to not remove existing output files.
+filecount = 0
+while os.path.isfile(f"ouput/output{filecount}.xlsx") == True:
+    filecount += 1
+final_df.to_excel(f"output/output{filecount}.xlsx")
+print(f"Output to 'output/output{filecount}.xlsx'")
