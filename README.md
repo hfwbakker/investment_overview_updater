@@ -11,9 +11,16 @@ NEXT UP:
 - Some of the strings inside  columns (especially in 'Narrative') are super long, perhaps need to edit those with regex?
 - Use ARGV to input files to filter?
 - Perhaps use a for loop or function to filter those files since they have the same format?
+- Need to update the output logic with openpyxl because now it doesn't work properly. wra_webcrawler has a properly function snippet now.
 
 
 LOG:
+--- Thursday, September 23rd, 2021 ---
+- Ran into some issues where the three merged data frames (df1 df2 df3) could not be sorted on date because some dates were cast as objects and others as datetime. Solved it by explicitly converting al 'Post date' column values to datetime.
+
+--- Wednesday, June 16th, 2021 ---
+- Re-installed on MAC and ran another investment overview update. Found some things to improve.
+
 --- Sunday, May 30th, 2021 ---
 - Script now takes both HSBC China account excel sheets and now combines them into an excel sheet sorted by date, with seperate columns for 001 and 011 accounts.
 - Installed pprint and tried to apply it to the df printing in terminal but doesnt seem to do much. Is it because some of the long strings (in narrative) include \ which could be read as escape characters or something? Maybe it's the Chinese characters that cause confusion? -> it seems that in terminal chinese characters take up more space than "normal" characters.
